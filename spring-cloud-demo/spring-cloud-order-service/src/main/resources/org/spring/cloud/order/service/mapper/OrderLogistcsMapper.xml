@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.order.service.mapper.OrderLogistcsMapper">
+	<resultMap id="BaseResultMap"
+		type="org.spring.cloud.order.service.model.OrderLogistcs">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+		<result column="user_tel" property="userTel" jdbcType="VARCHAR" />
+		<result column="logistcs_name" property="logistcsName"
+			jdbcType="VARCHAR" />
+		<result column="logistcs_id" property="logistcsId" jdbcType="VARCHAR" />
+		<result column="sreial_number" property="sreialNumber"
+			jdbcType="BIGINT" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="attr3" property="attr3" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_address, user_tel, logistcs_name, logistcs_id, sreial_number,
+		remark, user_id,
+		create_time, attr3
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_logistcs
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByAddress" resultMap="BaseResultMap"
+		parameterType="org.spring.cloud.order.service.model.OrderLogistcs">
+		select
+		<include refid="Base_Column_List" />
+		from order_logistcs
+		where 1=1
+		<if test="userAddress != null">
+			and user_address=#{userAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and user_id=#{userId,jdbcType=VARCHAR}
+		</if>
+			and user_tel=#{userTel,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from order_logistcs
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="org.spring.cloud.order.service.model.OrderLogistcs">
+		insert into order_logistcs (id, user_address, user_tel,
+		logistcs_name, logistcs_id, sreial_number,
+		remark, user_id, create_time,
+		attr3)
+		values (#{id,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR},
+		#{userTel,jdbcType=VARCHAR},
+		#{logistcsName,jdbcType=VARCHAR}, #{logistcsId,jdbcType=VARCHAR}, #{sreialNumber,jdbcType=BIGINT},
+		#{remark,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{attr3,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.spring.cloud.order.service.model.OrderLogistcs">
+		insert into order_logistcs
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userAddress != null">
+				user_address,
+			</if>
+			<if test="userTel != null">
+				user_tel,
+			</if>
+			<if test="logistcsName != null">
+				logistcs_name,
+			</if>
+			<if test="logistcsId != null">
+				logistcs_id,
+			</if>
+			<if test="sreialNumber != null">
+				sreial_number,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="attr3 != null">
+				attr3,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userAddress != null">
+				#{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userTel != null">
+				#{userTel,jdbcType=VARCHAR},
+			</if>
+			<if test="logistcsName != null">
+				#{logistcsName,jdbcType=VARCHAR},
+			</if>
+			<if test="logistcsId != null">
+				#{logistcsId,jdbcType=VARCHAR},
+			</if>
+			<if test="sreialNumber != null">
+				#{sreialNumber,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="attr3 != null">
+				#{attr3,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.order.service.model.OrderLogistcs">
+		update order_logistcs
+		<set>
+			<if test="userAddress != null">
+				user_address = #{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userTel != null">
+				user_tel = #{userTel,jdbcType=VARCHAR},
+			</if>
+			<if test="logistcsName != null">
+				logistcs_name = #{logistcsName,jdbcType=VARCHAR},
+			</if>
+			<if test="logistcsId != null">
+				logistcs_id = #{logistcsId,jdbcType=VARCHAR},
+			</if>
+			<if test="sreialNumber != null">
+				sreial_number = #{sreialNumber,jdbcType=BIGINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="attr3 != null">
+				attr3 = #{attr3,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.spring.cloud.order.service.model.OrderLogistcs">
+		update order_logistcs
+		set user_address = #{userAddress,jdbcType=VARCHAR},
+		user_tel = #{userTel,jdbcType=VARCHAR},
+		logistcs_name = #{logistcsName,jdbcType=VARCHAR},
+		logistcs_id = #{logistcsId,jdbcType=VARCHAR},
+		sreial_number = #{sreialNumber,jdbcType=BIGINT},
+		remark = #{remark,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		attr3 = #{attr3,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

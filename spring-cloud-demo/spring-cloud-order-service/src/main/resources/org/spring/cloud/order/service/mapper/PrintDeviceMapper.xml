@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.order.service.mapper.PrintDeviceMapper">
+	<resultMap id="BaseResultMap"
+		type="org.spring.cloud.order.service.model.PrintDevice">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="print_sn" property="printSn" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="store_id" property="storeId" jdbcType="VARCHAR" />print_win
+		<result column="print_win" property="printWin" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, print_sn, create_time, state, store_id,print_win
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from print_device
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectBySn" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from print_device
+		where print_sn = #{printSn,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByStatePrint" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from print_device
+		where state = '1'
+	</select>
+	
+	<select id="findByPrintDeviceList" resultMap="BaseResultMap" parameterType="org.spring.cloud.order.service.model.PrintDevice">
+		select
+		<include refid="Base_Column_List" />
+		from print_device
+		where 1=1 
+		<if test="printSn != null">
+			print_sn = #{printSn,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			create_time like #{createTime,jdbcType=VARCHAR}
+		</if>
+		<if test="state != null">
+			state = #{state,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from print_device
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="org.spring.cloud.order.service.model.PrintDevice">
+		insert into print_device (id, print_sn, create_time,
+		state,store_id)
+		values (#{id,jdbcType=VARCHAR}, #{printSn,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{state,jdbcType=VARCHAR},#{storeId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.spring.cloud.order.service.model.PrintDevice">
+		insert into print_device
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="printSn != null">
+				print_sn,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="storeId != null">
+				store_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="printSn != null">
+				#{printSn,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				#{storeId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.order.service.model.PrintDevice">
+		update print_device
+		<set>
+			<if test="printSn != null">
+				print_sn = #{printSn,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				store_id = #{storeId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.spring.cloud.order.service.model.PrintDevice">
+		update print_device
+		set print_sn = #{printSn,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		state = #{state,jdbcType=VARCHAR},store_id = #{storeId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

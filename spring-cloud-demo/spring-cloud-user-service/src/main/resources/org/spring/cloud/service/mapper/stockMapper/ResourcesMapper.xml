@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.stockMapper.ResourcesMapper">
+	<resultMap id="BaseResultMap"
+		type="org.spring.cloud.service.model.stockPo.Resources">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="resUrl" property="resurl" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="parentId" property="parentid" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, resUrl, type, parentId, sort, create_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from resources
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from resources
+		where 1=1
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			and type = #{type,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<delete id="deleteByRoleResource" parameterType="java.lang.String">
+		delete
+		role_resources where resourcesId=#{id,jdbcType=VARCHAR}
+	</delete>
+	<!-- 查询当前用户的按钮权限资源 -->
+	<select id="selectBtnByResource" resultType="java.lang.String"
+		parameterType="Map">
+		SELECT
+		group_concat(r.name) as btn
+		FROM
+		resources r
+		INNER
+		JOIN role_resources rr ON r.id = rr.resourcesId
+		INNER JOIN role rl ON
+		rl.id = rr.roleId
+		INNER JOIN user_role ur ON
+		ur.roleId = rl.id
+		INNER JOIN
+		USER u ON u.id = ur.userId
+		WHERE
+		1 = 1
+		AND r.type = '2'
+		AND u.id =
+		#{userId,jdbcType=VARCHAR}
+		AND r.parentId =
+		#{resourceId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询当前用户的按钮权限资源 -->
+	<select id="selectBtnByUser" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		r.id,
+		r.`name`,
+		r.parentId,
+		r.resUrl,
+		r.type,
+		r.sort,
+		r.create_time
+		FROM
+		resources r
+		INNER
+		JOIN role_resources rr ON r.id =
+		rr.resourcesId
+		INNER JOIN role rl ON
+		rl.id = rr.roleId
+		INNER JOIN
+		user_role ur ON
+		ur.roleId = rl.id
+		INNER JOIN
+		USER u ON u.id = ur.userId
+		WHERE
+		1 = 1
+		AND r.type = '2'
+		AND u.id =
+		#{userId,jdbcType=VARCHAR}
+		AND
+		r.parentId =
+		#{resourceId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询当前用户的按钮权限资源 -->
+	<select id="selectBtnByAdmin" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		resources
+		WHERE
+		1 = 1
+		AND type = '2'
+		AND parentId =
+		#{resourceId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询当前用户的权限资源 AND r.type = '1' -->
+	<select id="findResourcesByRoleId" resultType="java.lang.String"
+		parameterType="Map">
+		SELECT
+		group_concat(r.name) as name
+		FROM
+		resources r
+		INNER
+		JOIN role_resources rr ON r.id = rr.resourcesId
+		INNER JOIN role rl ON
+		rl.id = rr.roleId
+		INNER JOIN user_role ur ON
+		ur.roleId = rl.id
+		INNER JOIN
+		USER u ON u.id = ur.userId
+		WHERE
+		1 = 1
+		AND
+		rl.id=#{roleId,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 超级管理员查询所有的权限资源 -->
+	<select id="selectResourceByAdmin" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		r.id,
+		r.`name`,
+		r.parentId,
+		r.resUrl,
+		r.type,
+		r.sort,
+		r.create_time
+		FROM
+		resources r
+		WHERE
+		1 = 1
+
+	</select>
+
+	<!-- 查询当前用户的操作权限按钮及资源数据 -->
+	<select id="selectResourceBtnByUserId" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		r.id,
+		r.`name`,
+		r.parentId,
+		r.resUrl,
+		r.type,
+		r.sort,
+		r.create_time
+		FROM
+		resources r
+		INNER JOIN role_resources rr ON r.id = rr.resourcesId
+		INNER JOIN role rl ON rl.id = rr.roleId
+		INNER JOIN user_role ur ON
+		ur.roleId = rl.id
+		INNER JOIN USER u ON u.id = ur.userId
+		WHERE
+		1 = 1
+		<if test="userId != null">
+			AND u.id = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="resourceId != null">
+			AND r.parentId = #{resourceId,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="selectResourceBtnByType" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		r.id,
+		r.`name`,
+		r.parentId,
+		r.resUrl,
+		r.type,
+		r.sort,
+		r.create_time
+		FROM
+		resources r
+		WHERE
+		1 = 1 and
+		r.type='2'
+	</select>
+
+	<select id="selectResourceBtnByTypes" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT
+		r.id,
+		r.`name`,
+		r.parentId,
+		r.resUrl,
+		r.type,
+		r.sort,
+		r.create_time
+		FROM
+		resources r
+		INNER JOIN role_resources rr ON r.id = rr.resourcesId
+		INNER JOIN role rl ON rl.id = rr.roleId
+		INNER JOIN user_role ur ON
+		ur.roleId = rl.id
+		INNER JOIN USER u ON u.id = ur.userId
+		WHERE
+		1 = 1 and
+		r.type='2'
+		<if test="userId != null">
+			AND u.id = #{userId,jdbcType=VARCHAR}
+		</if>
+
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		resources
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<delete id="deleteByParentId" parameterType="java.lang.String">
+		delete from
+		resources
+		where parentId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insert" parameterType="org.spring.cloud.service.model.stockPo.Resources">
+		insert into resources (id,
+		name, resUrl,
+		type, parentId, sort,create_time
+		)
+		values
+		(#{id,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{resurl,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER},
+		#{parentid,jdbcType=VARCHAR},
+		#{sort,jdbcType=INTEGER},#{createTime,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="org.spring.cloud.service.model.stockPo.Resources">
+		insert into resources
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="resurl != null">
+				resUrl,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="parentid != null">
+				parentId,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="resurl != null">
+				#{resurl,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="parentid != null">
+				#{parentid,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.service.model.stockPo.Resources">
+		update resources
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="resurl != null">
+				resUrl = #{resurl,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="parentid != null">
+				parentId = #{parentid,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.spring.cloud.service.model.stockPo.Resources">
+		update resources
+		set name = #{name,jdbcType=VARCHAR},
+		resUrl =
+		#{resurl,jdbcType=VARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		parentId =
+		#{parentid,jdbcType=VARCHAR},
+		sort = #{sort,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.rxshopMapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="org.spring.cloud.service.model.rxshopPo.Users" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_rank_id" property="userRankId" jdbcType="VARCHAR" />
+    <result column="friend_id" property="friendId" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="nikename" property="nikename" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="six" property="six" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="is_used" property="isUsed" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="paypassword_type" property="paypasswordType" jdbcType="VARCHAR" />
+    <result column="paycount_type" property="paycountType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_rank_id, friend_id, pic, nikename, name, id_card, six, birthday, email, 
+    password, user_name, create_time, is_used, state, paypassword_type, paycount_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from users
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.spring.cloud.service.model.rxshopPo.Users" >
+    insert into users (id, user_rank_id, friend_id, 
+      pic, nikename, name, 
+      id_card, six, birthday, 
+      email, password, user_name, 
+      create_time, is_used, state, 
+      paypassword_type, paycount_type)
+    values (#{id,jdbcType=VARCHAR}, #{userRankId,jdbcType=VARCHAR}, #{friendId,jdbcType=VARCHAR}, 
+      #{pic,jdbcType=VARCHAR}, #{nikename,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{six,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{isUsed,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{paypasswordType,jdbcType=VARCHAR}, #{paycountType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.spring.cloud.service.model.rxshopPo.Users" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userRankId != null" >
+        user_rank_id,
+      </if>
+      <if test="friendId != null" >
+        friend_id,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="nikename != null" >
+        nikename,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="six != null" >
+        six,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isUsed != null" >
+        is_used,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="paypasswordType != null" >
+        paypassword_type,
+      </if>
+      <if test="paycountType != null" >
+        paycount_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userRankId != null" >
+        #{userRankId,jdbcType=VARCHAR},
+      </if>
+      <if test="friendId != null" >
+        #{friendId,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="nikename != null" >
+        #{nikename,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="six != null" >
+        #{six,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsed != null" >
+        #{isUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="paypasswordType != null" >
+        #{paypasswordType,jdbcType=VARCHAR},
+      </if>
+      <if test="paycountType != null" >
+        #{paycountType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.service.model.rxshopPo.Users" >
+    update users
+    <set >
+      <if test="userRankId != null" >
+        user_rank_id = #{userRankId,jdbcType=VARCHAR},
+      </if>
+      <if test="friendId != null" >
+        friend_id = #{friendId,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="nikename != null" >
+        nikename = #{nikename,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="six != null" >
+        six = #{six,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsed != null" >
+        is_used = #{isUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="paypasswordType != null" >
+        paypassword_type = #{paypasswordType,jdbcType=VARCHAR},
+      </if>
+      <if test="paycountType != null" >
+        paycount_type = #{paycountType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.spring.cloud.service.model.rxshopPo.Users" >
+    update users
+    set user_rank_id = #{userRankId,jdbcType=VARCHAR},
+      friend_id = #{friendId,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      nikename = #{nikename,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      six = #{six,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      is_used = #{isUsed,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      paypassword_type = #{paypasswordType,jdbcType=VARCHAR},
+      paycount_type = #{paycountType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

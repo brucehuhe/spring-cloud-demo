@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.stockMapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="org.spring.cloud.service.model.stockPo.Role" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="roleDesc" property="roledesc" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roleDesc, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByPageRole" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where 1=1
+    <if test="roleDesc != null ">
+   	 and roleDesc = #{roleDesc,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where roleDesc = #{roledesc,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByUserRole" parameterType="java.lang.String" >
+    delete from user_role
+    where roleId = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByRoleResources" parameterType="java.lang.String" >
+    delete from role_resources
+    where roleId = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.spring.cloud.service.model.stockPo.Role" >
+    insert into role (id, roleDesc, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.spring.cloud.service.model.stockPo.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roledesc != null" >
+        roleDesc,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null" >
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.service.model.stockPo.Role" >
+    update role
+    <set >
+      <if test="roledesc != null" >
+        roleDesc = #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.spring.cloud.service.model.stockPo.Role" >
+    update role
+    set roleDesc = #{roledesc,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

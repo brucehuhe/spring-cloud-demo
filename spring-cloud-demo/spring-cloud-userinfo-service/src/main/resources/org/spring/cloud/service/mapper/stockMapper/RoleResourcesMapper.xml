@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="org.spring.cloud.service.mapper.stockMapper.RoleResourcesMapper">
+	<resultMap id="BaseResultMap"
+		type="org.spring.cloud.service.model.stockPo.RoleResourcesKey">
+		<id column="roleId" property="roleid" jdbcType="VARCHAR" />
+		<id column="resourcesId" property="resourcesid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		roleId, resourcesId
+	</sql>
+
+	<select id="findByRoleId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from role_resources
+		where roleId = #{roleid,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByRoleId"
+		parameterType="java.lang.String">
+		delete from role_resources
+		where roleId =
+		#{roleid,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="org.spring.cloud.service.model.stockPo.RoleResourcesKey">
+		delete from role_resources
+		where roleId =
+		#{roleid,jdbcType=VARCHAR}
+		and resourcesId =
+		#{resourcesid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="org.spring.cloud.service.model.stockPo.RoleResourcesKey">
+		insert into role_resources (roleId, resourcesId)
+		values
+		(#{roleid,jdbcType=VARCHAR}, #{resourcesid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="org.spring.cloud.service.model.stockPo.RoleResourcesKey">
+		insert into role_resources
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleid != null">
+				roleId,
+			</if>
+			<if test="resourcesid != null">
+				resourcesId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleid != null">
+				#{roleid,jdbcType=VARCHAR},
+			</if>
+			<if test="resourcesid != null">
+				#{resourcesid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

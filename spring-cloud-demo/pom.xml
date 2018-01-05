@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>spring-cloud-demo</groupId>
+	<artifactId>spring-cloud-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>spring-cloud-eureka-server</module>   <!-- 注册服务 -->
+		<module>spring-cloud-config-server</module>   <!-- 配置中心服务 -->
+		<module>spring-cloud-sleuth-server</module>   <!-- 操作追踪服务 -->
+		<module>spring-cloud-gateway-service</module> <!-- 路由服务 -->
+		<module>spring-cloud-user-service</module>  <!-- 用户服务 -->
+		<module>spring-cloud-exchang-service</module> <!-- 兑换商品服务 -->
+		<module>spring-cloud-exOrder-service</module> <!-- 兑换订单服务 -->
+		<module>spring-cloud-logist-service</module>  <!-- 物流订单服务 -->
+		<module>spring-cloud-system-login</module>
+		<module>spring-cloud-mobile-login</module>
+		<module>spring-cloud-invetory-service</module>
+		<module>spring-cloud-goods-service</module>
+		<module>spring-cloud-userinfo-service</module>
+    <module>spring-cloud-order-service</module>
+    <module>spring-cloud-img-server</module>
+    <module>spring-cloud-orderPay-server</module>
+  </modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

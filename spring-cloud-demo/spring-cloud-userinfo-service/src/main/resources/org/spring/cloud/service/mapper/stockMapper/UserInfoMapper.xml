@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.stockMapper.UserInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="org.spring.cloud.service.model.stockPo.UserInfo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="con_info" property="conInfo" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="store_id" property="StoreId" jdbcType="VARCHAR" />
+		<result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, sex, con_info, code, state, create_time,
+		user_id,store_id,cn_name
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByUser" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where 1=1
+		<if test="code != null">
+			and code = #{code,jdbcType=VARCHAR}
+		</if>
+		<!-- <if test="conInfo != null"> and con_info like #{conInfo,jdbcType=VARCHAR} 
+			</if> <if test="name != null"> and name like #{name,jdbcType=VARCHAR} </if> -->
+	</select>
+
+	<select id="findByUsers" resultMap="BaseResultMap"
+		parameterType="org.spring.cloud.service.model.stockPo.UserInfo">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where 1=1
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null">
+			and code = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			and create_time = #{createTime,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="conInfo != null">
+			and con_info = #{conInfo,jdbcType=VARCHAR}
+		</if>
+		<if test="storeId != null">
+			and store_id = #{storeId,jdbcType=VARCHAR}
+		</if>
+		<if test="cnName != null">
+			and cn_name = #{cnName,jdbcType=VARCHAR}
+		</if>
+		order by create_time desc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		user_info
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByUserRole" parameterType="java.lang.String">
+		delete from
+		user_role
+		where userId = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="org.spring.cloud.service.model.stockPo.UserInfo">
+		insert into user_info (id,
+		name, sex,
+		con_info, code, state,
+		create_time, user_id,store_id,cn_name)
+		values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{conInfo,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR},
+		#{storeId,jdbcType=VARCHAR}, #{cnName,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.spring.cloud.service.model.stockPo.UserInfo">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="conInfo != null">
+				con_info,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="storeId != null">
+				store_id ,
+			</if>
+			<if test="cnName != null">
+				cn_name ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="conInfo != null">
+				#{conInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				#{storeId,jdbcType=VARCHAR}
+			</if>
+			<if test="cnName != null">
+				#{cnName,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.service.model.stockPo.UserInfo">
+		update user_info
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="conInfo != null">
+				con_info = #{conInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="storeId != null">
+				store_id = #{storeId,jdbcType=VARCHAR}
+			</if>
+			<if test="cnName != null">
+				cn_name = #{cnName,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.spring.cloud.service.model.stockPo.UserInfo">
+		update user_info
+		set name = #{name,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		con_info = #{conInfo,jdbcType=VARCHAR},
+		code =
+		#{code,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		user_id =
+		#{userId,jdbcType=VARCHAR},
+		store_id = #{storeId,jdbcType=VARCHAR},
+		cn_name = #{cnName,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

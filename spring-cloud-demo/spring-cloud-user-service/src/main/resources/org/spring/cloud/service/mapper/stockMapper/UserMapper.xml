@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.stockMapper.UserMapper">
+	<resultMap id="BaseResultMap" type="org.spring.cloud.service.model.stockPo.User">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="enable" property="enable" jdbcType="INTEGER" />
+		<result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+		<result column="is_use" property="isUse" jdbcType="VARCHAR" />
+		<result column="login_state" property="loginState" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, username, password, enable, login_time, is_use, login_state
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where username = #{username,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByUser" resultMap="BaseResultMap"
+		parameterType="org.spring.cloud.service.model.stockPo.User">
+		select
+		u.id,
+		u.username,
+		u.PASSWORD,
+		u.ENABLE,
+		u.login_time,
+		u.is_use,
+		u.login_state
+		from user u inner join user_info ui on u.id=ui.user_id
+		where 1=1
+		<if test="isUse != null">
+			and u.is_use=#{isUse,jdbcType=VARCHAR}
+		</if>
+		<if test="username != null">
+			and ui.name=#{username,jdbcType=VARCHAR}
+		</if>
+		<if test="password != null">
+			and u.password=#{password,jdbcType=VARCHAR}
+		</if>
+		<if test="loginState != null">
+			and u.login_state like #{loginState,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from user
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="org.spring.cloud.service.model.stockPo.User">
+		insert into user (id, username, password,
+		enable, login_time, is_use,
+		login_state)
+		values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{enable,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, #{isUse,jdbcType=VARCHAR},
+		#{loginState,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.spring.cloud.service.model.stockPo.User">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="enable != null">
+				enable,
+			</if>
+			<if test="loginTime != null">
+				login_time,
+			</if>
+			<if test="isUse != null">
+				is_use,
+			</if>
+			<if test="loginState != null">
+				login_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="enable != null">
+				#{enable,jdbcType=INTEGER},
+			</if>
+			<if test="loginTime != null">
+				#{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isUse != null">
+				#{isUse,jdbcType=VARCHAR},
+			</if>
+			<if test="loginState != null">
+				#{loginState,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.service.model.stockPo.User">
+		update user
+		<set>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="enable != null">
+				enable = #{enable,jdbcType=INTEGER},
+			</if>
+			<if test="loginTime != null">
+				login_time = #{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isUse != null">
+				is_use = #{isUse,jdbcType=VARCHAR},
+			</if>
+			<if test="loginState != null">
+				login_state = #{loginState,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.spring.cloud.service.model.stockPo.User">
+		update user
+		set username = #{username,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		enable = #{enable,jdbcType=INTEGER},
+		login_time = #{loginTime,jdbcType=TIMESTAMP},
+		is_use = #{isUse,jdbcType=VARCHAR},
+		login_state = #{loginState,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

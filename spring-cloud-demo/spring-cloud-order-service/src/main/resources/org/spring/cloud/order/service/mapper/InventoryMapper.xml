@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.order.service.mapper.InventoryMapper" >
+  <resultMap id="BaseResultMap" type="org.spring.cloud.order.service.model.Inventory" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="classfy_id" property="classfyId" jdbcType="VARCHAR" />
+    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="store_num" property="storeNum" jdbcType="BIGINT" />
+    <result column="sale_num" property="saleNum" jdbcType="BIGINT" />
+    <result column="is_logistics" property="isLogistics" jdbcType="VARCHAR" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, classfy_id, specifications, price, pic_path, store_num, sale_num, 
+    is_logistics, attr1, attr2, attr3, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from inventory
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.spring.cloud.order.service.model.Inventory" >
+    insert into inventory (id, code, name, 
+      classfy_id, specifications, price, 
+      pic_path, store_num, sale_num, 
+      is_logistics, attr1, attr2, 
+      attr3, state)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{classfyId,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{picPath,jdbcType=VARCHAR}, #{storeNum,jdbcType=BIGINT}, #{saleNum,jdbcType=BIGINT}, 
+      #{isLogistics,jdbcType=VARCHAR}, #{attr1,jdbcType=VARCHAR}, #{attr2,jdbcType=VARCHAR}, 
+      #{attr3,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.spring.cloud.order.service.model.Inventory" >
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="classfyId != null" >
+        classfy_id,
+      </if>
+      <if test="specifications != null" >
+        specifications,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="storeNum != null" >
+        store_num,
+      </if>
+      <if test="saleNum != null" >
+        sale_num,
+      </if>
+      <if test="isLogistics != null" >
+        is_logistics,
+      </if>
+      <if test="attr1 != null" >
+        attr1,
+      </if>
+      <if test="attr2 != null" >
+        attr2,
+      </if>
+      <if test="attr3 != null" >
+        attr3,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classfyId != null" >
+        #{classfyId,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNum != null" >
+        #{storeNum,jdbcType=BIGINT},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=BIGINT},
+      </if>
+      <if test="isLogistics != null" >
+        #{isLogistics,jdbcType=VARCHAR},
+      </if>
+      <if test="attr1 != null" >
+        #{attr1,jdbcType=VARCHAR},
+      </if>
+      <if test="attr2 != null" >
+        #{attr2,jdbcType=VARCHAR},
+      </if>
+      <if test="attr3 != null" >
+        #{attr3,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.spring.cloud.order.service.model.Inventory" >
+    update inventory
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="classfyId != null" >
+        classfy_id = #{classfyId,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNum != null" >
+        store_num = #{storeNum,jdbcType=BIGINT},
+      </if>
+      <if test="saleNum != null" >
+        sale_num = #{saleNum,jdbcType=BIGINT},
+      </if>
+      <if test="isLogistics != null" >
+        is_logistics = #{isLogistics,jdbcType=VARCHAR},
+      </if>
+      <if test="attr1 != null" >
+        attr1 = #{attr1,jdbcType=VARCHAR},
+      </if>
+      <if test="attr2 != null" >
+        attr2 = #{attr2,jdbcType=VARCHAR},
+      </if>
+      <if test="attr3 != null" >
+        attr3 = #{attr3,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.spring.cloud.order.service.model.Inventory" >
+    update inventory
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      classfy_id = #{classfyId,jdbcType=VARCHAR},
+      specifications = #{specifications,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      pic_path = #{picPath,jdbcType=VARCHAR},
+      store_num = #{storeNum,jdbcType=BIGINT},
+      sale_num = #{saleNum,jdbcType=BIGINT},
+      is_logistics = #{isLogistics,jdbcType=VARCHAR},
+      attr1 = #{attr1,jdbcType=VARCHAR},
+      attr2 = #{attr2,jdbcType=VARCHAR},
+      attr3 = #{attr3,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

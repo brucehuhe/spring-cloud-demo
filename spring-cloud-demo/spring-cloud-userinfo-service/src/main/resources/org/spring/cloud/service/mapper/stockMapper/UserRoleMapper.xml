@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.cloud.service.mapper.stockMapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="org.spring.cloud.service.model.stockPo.UserRole" >
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="roleId" property="roleid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userId, roleId
+  </sql>
+  <select id="findByUserRole" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_role
+		where userId = #{userid,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByUserId" parameterType="java.lang.String">
+		delete from user_role
+		where userId = #{userid,jdbcType=VARCHAR}
+	</delete>
+  
+  <insert id="insert" parameterType="org.spring.cloud.service.model.stockPo.UserRole" >
+    insert into user_role (userId, roleId)
+    values (#{userid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.spring.cloud.service.model.stockPo.UserRole" >
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="roleid != null" >
+        roleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
